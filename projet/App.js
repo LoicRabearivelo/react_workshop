@@ -1,9 +1,15 @@
-import React from 'react';
+import React, {useState}from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Switch } from 'react-native';
 import { TextInput, TouchableOpacity } from 'react-native-web';
 
+const press = () => {
+  console.log('bonjour');
+};
+
 export default function App() {
+  const [isEnabled, setIsEnabled] = useState(false);
+  const toggleSwitch = () => setIsEnabled(previousState=>!previousState);
   return (
     <View style={styles.container}>
       <View style={styles.textContainer}>
@@ -13,11 +19,18 @@ export default function App() {
         <TextInput style={styles.input} placeholder="faut écrire chef" />
       </View>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={press}>
           <Text>Un bouton</Text>
         </TouchableOpacity>
       </View>
       <StatusBar style="auto" />
+      <Switch
+        trackColor={{false: '#767577', true: '#81b0ff'}}
+        thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
+        ios_backgroundColor="#3e3e3e"
+        onValueChange={toggleSwitch}
+        value={isEnabled}
+      />
     </View>
   );
 }
@@ -43,7 +56,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   input: {
-    height: 40,
+    height: 20,
     width: '100%',
   },
   buttonContainer: {
